@@ -14,7 +14,6 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>small-spring-step-04</artifactId>
-
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>

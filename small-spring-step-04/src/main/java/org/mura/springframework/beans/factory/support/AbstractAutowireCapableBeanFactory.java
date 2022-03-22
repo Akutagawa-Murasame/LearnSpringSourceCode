@@ -1,7 +1,11 @@
 package org.mura.springframework.beans.factory.support;
 
 import org.mura.springframework.beans.BeansException;
+import org.mura.springframework.beans.PropertyValue;
+import org.mura.springframework.beans.PropertyValues;
 import org.mura.springframework.beans.factory.config.BeanDefinition;
+import org.mura.springframework.beans.factory.config.BeanReference;
+import cn.hutool.core.bean.BeanUtil;
 
 import java.lang.reflect.Constructor;
 
@@ -26,13 +30,24 @@ import java.lang.reflect.Constructor;
  */
 public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFactory {
 
-    private InstantiationStrategy instantiationStrategy = new CglibSubclassingInstantiationStrategy();
+    private final InstantiationStrategy instantiationStrategy = new CglibSubclassingInstantiationStrategy();
+
+    public InstantiationStrategy getInstantiationStrategy() {
+        return instantiationStrategy;
+    }
 
     @Override
     protected Object createBean(String beanName, BeanDefinition beanDefinition, Object... args) throws BeansException {
-        Object bean = null;
+        Object bean;
 
-        bean = createBeanInstance(beanDefinition, beanName, args);
+        try {
+            bean = createBeanInstance(beanDefinition, beanName, args);
+
+            //        给bean填充属性
+            applyPropertyValues(beanName, bean, beanDefinition);
+        } catch (Exception e) {
+            throw new BeansException("Instantiation of bean failed", e);
+        }
 
 //        此处都是单例的，还未涉及原型模式
         addSingleton(beanName, bean);
@@ -40,7 +55,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
     }
 
     protected Object createBeanInstance(BeanDefinition beanDefinition, String beanName, Object... args) throws BeansException {
-        Constructor constructorToUse = null;
+        Constructor<?> constructorToUse = null;
         Class<?> beanClass = beanDefinition.getBeanClass();
 
 //        获取bean的所有构造方法
@@ -48,13 +63,39 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 
 //        这里只比较了参数的数量，而实际 Spring 源码中还需要比对入参
 //类型，否则相同数量不同入参类型的情况，就会抛异常了。
-        for (Constructor constructor : declaredConstructors) {
+        for (Constructor<?> constructor : declaredConstructors) {
             if (null != args && constructor.getParameterTypes().length == args.length) {
                 constructorToUse = constructor;
                 break;
             }
         }
 
-        return instantiationStrategy.instantiate(beanDefinition, beanName, constructorToUse, args);
+        return getInstantiationStrategy().instantiate(beanDefinition, beanName, constructorToUse, args);
+    }
+
+    /**
+     * bean属性填充
+     */
+    protected void applyPropertyValues(String beanName, Object bean, BeanDefinition beanDefinition) throws BeansException {
+        try {
+            PropertyValues propertyValues = beanDefinition.getPropertyValues();
+            for (PropertyValue propertyValue : propertyValues.getPropertyValues()) {
+                String name = propertyValue.getName();
+                Object value = propertyValue.getValue();
+
+//                如果是引用类型，循环依赖问题，当前版本其实没用到这个，这个内容较多，后续版本再写
+                if (value instanceof BeanReference) {
+//                    A 依赖 B，获取 B 的实例化
+                    BeanReference beanReference = (BeanReference) value;
+                    value = getBean(beanReference.getBeanName());
+                }
+
+//                属性填充
+//                小傅这里引入了hutool依赖，但是pdf里没说。。。
+                BeanUtil.setFieldValue(bean, name, value);
+            }
+        } catch (BeansException e) {
+            throw new BeansException("Error setting properties values:" + beanName);
+        }
     }
 }
