@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>LearnSpringSourceCode</artifactId>
+        <groupId>org.mura</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+<!--    我们需要在现有的 Spring 框架雏形中添加一个资源-->
+<!--    解析器，也就是能读取 classpath、本地文件和云文件的配置内容。这些配置-->
+<!--    内容就是像使用 Spring 时配置的 Spring.xml 一样，里面会包括 Bean 对象-->
+<!--    的描述和属性信息。 在读取配置文件信息后，接下来就是对配置文件中的-->
+<!--    Bean 描述信息解析后进行注册操作，把 Bean 对象注册到 Spring 容器中-->
+
+<!--    资源管理器是相对独立的部分，开发不算复杂，可以把第四个模块复制一份来二次开发-->
+
+<!--    本章节为了能把 Bean 的定义、注册和初始化交给 Spring.xml 配置化处理，那么-->
+<!--    就需要实现两大块内容，分别是：资源加载器、xml 资源处理类，实现过程主要以-->
+<!--    对接口 Resource、ResourceLoader 的实现，而另外-->
+<!--    BeanDefinitionReader 接口则是对资源的具体使用，将配置信息注册到-->
+<!--    Spring 容器中去。-->
+<!--     在 Resource 的资源加载器的实现中包括了，ClassPath、系统文件、云配置文件，-->
+<!--    core.io包就是为了统一这些资源的-->
+<!--    这三部分与 Spring 源码中的设计和实现保持一致，最终在-->
+<!--    DefaultResourceLoader 中做具体的调用。-->
+<!--     接口：BeanDefinitionReader、抽象类：AbstractBeanDefinitionReader、实现类：-->
+<!--    XmlBeanDefinitionReader，这三部分内容主要是合理清晰的处理了资源读取后的注-->
+<!--    册 Bean 容器操作。接口管定义，抽象类处理非接口功能外的注册 Bean 组件填-->
+<!--    充，最终实现类即可只关心具体的业务实现-->
+    <artifactId>small-spring-step-05</artifactId>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+    </properties>
+
+</project>
