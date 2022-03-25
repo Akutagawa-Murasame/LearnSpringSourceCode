@@ -3,7 +3,6 @@ package org.mura.springframework.beans.factory.support;
 import org.mura.springframework.beans.BeansException;
 import org.mura.springframework.beans.factory.ConfigurableListableBeanFactory;
 import org.mura.springframework.beans.factory.config.BeanDefinition;
-import org.mura.springframework.beans.factory.config.ConfigurableBeanFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,7 +30,7 @@ public class DefaultListableBeanFactory
         extends AbstractAutowireCapableBeanFactory
         implements BeanDefinitionRegistry,
         ConfigurableListableBeanFactory {
-    private Map<String, BeanDefinition> beanDefinitionMap = new HashMap<>();
+    private final Map<String, BeanDefinition> beanDefinitionMap = new HashMap<>();
 
     @Override
     public void registerBeanDefinition(String beanName, BeanDefinition beanDefinition) {
@@ -43,10 +42,13 @@ public class DefaultListableBeanFactory
         return beanDefinitionMap.containsKey(beanName);
     }
 
-
+    @Override
+    public String[] getBeanDefinitionNames() {
+        return beanDefinitionMap.keySet().toArray(new String[0]);
+    }
 
     @Override
-    protected BeanDefinition getBeanDefinition(String beanName) throws BeansException {
+    public BeanDefinition getBeanDefinition(String beanName) throws BeansException {
         BeanDefinition beanDefinition = beanDefinitionMap.get(beanName);
 
         if (beanDefinition == null) {
@@ -54,5 +56,24 @@ public class DefaultListableBeanFactory
         }
 
         return beanDefinition;
+    }
+
+
+    @Override
+    public <T> Map<String, T> getBeansOfType(Class<T> type) throws BeansException {
+        Map<String, T> beansOfType = new HashMap<>(16);
+
+        for (Map.Entry<String, BeanDefinition> entry : beanDefinitionMap.entrySet()) {
+            String beanName = entry.getKey();
+            BeanDefinition beanDefinition = entry.getValue();
+            Class<?> beanClass = beanDefinition.getBeanClass();
+
+//            判断type是否是beanClass的同类或超类
+            if (type.isAssignableFrom(beanClass)) {
+                beansOfType.put(beanName, (T) getBean(beanName));
+            }
+        }
+
+        return beansOfType;
     }
 }

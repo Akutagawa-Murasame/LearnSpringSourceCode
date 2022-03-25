@@ -22,22 +22,33 @@ public abstract class AbstractBeanFactory
         implements BeanFactory {
     @Override
     public Object getBean(String name) throws BeansException {
-//        此时getBean在BeanFactory中有了另外一个重载，不强转的话会报错，因为不知道应该调用哪个getBean
-        return getBean(name, (Object) null);
+        return doGetBean(name, null);
     }
 
     @Override
     public Object getBean(String name, Object... args) throws BeansException {
+        return doGetBean(name, args);
+    }
+
+    @Override
+    public <T> T getBean(String name, Class<T> requiredType) throws BeansException {
+        return (T) getBean(name);
+    }
+
+    /**
+     * 我今天才知道，泛型方法可以在调用时通过< T >显式声明泛型参数
+     */
+    protected <T> T doGetBean(final String name, final Object[] args) throws BeansException {
         Object bean = getSingleton(name);
 
 //        有该单例对象，返回单例对象
         if (bean != null) {
-            return bean;
+            return (T) bean;
         }
 
 //        否则，按照方法创建bean
         BeanDefinition beanDefinition = getBeanDefinition(name);
-        return createBean(name, beanDefinition, args);
+        return (T) createBean(name, beanDefinition, args);
     }
 
     protected abstract BeanDefinition getBeanDefinition(String beanName) throws BeansException;

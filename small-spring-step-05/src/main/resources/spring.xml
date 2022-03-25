@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--这是一种熟悉的感觉-->
+<beans>
+    <bean id="userDao" class="org.mura.springframework.test.bean.UserDao"/>
+
+    <bean id="userService" class="org.mura.springframework.test.bean.UserService">
+        <property name="uId" value="10003"/>
+        <property name="userDao" ref="userDao"/>
+    </bean>
+</beans>
+
+<!--这个文件用于测试bean的配置文件-->

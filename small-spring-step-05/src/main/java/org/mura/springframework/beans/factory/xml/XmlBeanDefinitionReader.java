@@ -1,4 +1,4 @@
-package org.mura.springframework.beans.factory.support;
+package org.mura.springframework.beans.factory.xml;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.XmlUtil;
@@ -6,6 +6,8 @@ import org.mura.springframework.beans.BeansException;
 import org.mura.springframework.beans.PropertyValue;
 import org.mura.springframework.beans.factory.config.BeanDefinition;
 import org.mura.springframework.beans.factory.config.BeanReference;
+import org.mura.springframework.beans.factory.support.AbstractBeanDefinitionReader;
+import org.mura.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.mura.springframework.core.io.Resource;
 import org.mura.springframework.core.io.ResourceLoader;
 import org.w3c.dom.Document;
@@ -94,6 +96,11 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
                 beanName = StrUtil.lowerFirst(clazz.getSimpleName());
             }
 
+//            之前这个if是放在for循环后面的，我不明白为什么以前的实现要在把一切数据都准备好了之后再判断是否存在这个beanName😂
+            if (getRegistry().containsBeanDefinition(beanName)) {
+                throw new BeansException("Duplicate beanName[" + beanName + "] is not allowed");
+            }
+
 //            定义 Bean
             BeanDefinition beanDefinition = new BeanDefinition(clazz);
 
@@ -125,10 +132,7 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
                 beanDefinition.getPropertyValues().addPropertyValue(propertyValue);
             }
 
-            if (getRegistry().containsBeanDefinition(beanName)) {
-                throw new BeansException("Duplicate beanName[" + beanName + "] is not allowed");
-            }
-// 注册 BeanDefinition
+//                注册 BeanDefinition
             getRegistry().registerBeanDefinition(beanName, beanDefinition);
         }
     }

@@ -31,7 +31,6 @@
 <!--    册 Bean 容器操作。接口管定义，抽象类处理非接口功能外的注册 Bean 组件填-->
 <!--    充，最终实现类即可只关心具体的业务实现-->
     <artifactId>small-spring-step-05</artifactId>
-
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
