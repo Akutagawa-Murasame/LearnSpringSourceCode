@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>LearnSpringSourceCode</artifactId>
+        <groupId>org.mura</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+<!--    DefaultListableBeanFactory、XmlBeanDefinitionReader，是我们在目前 Spring 框-->
+<!--    架中对于服务功能测试的使用方式，它能很好的体现出 Spring 是如何对 xml 加-->
+<!--    载以及注册 Bean 对象的操作过程，但这种方式是面向 Spring 本身的，还不具备-->
+<!--    一定的扩展性。-->
+<!--     就像我们现在需要提供出一个可以在 Bean 初始化过程中，完成对 Bean 对象的-->
+<!--    扩展时，就很难做到自动化处理。所以我们要把 Bean 对象扩展机制功能和对-->
+<!--    Spring 框架上下文的包装融合起来，对外提供完整的服务。-->
+    <artifactId>small-spring-step-06</artifactId>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+    </properties>
+
+</project>

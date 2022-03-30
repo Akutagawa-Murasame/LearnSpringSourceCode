@@ -22,7 +22,6 @@ import java.util.Map;
  * registerBeanDefinition(String beanName, BeanDefinition beanDefinition) 方法，当
  * 然你还会看到一个 getBeanDefinition 的实现，这个方法我们文中提到过它是抽象
  * 类 AbstractBeanFactory 中定义的抽象方法。现在注册 Bean 定义与获取 Bean 定义
- *
  * 就可以同时使用了，是不感觉这个套路还蛮深的。接口定义了注册，抽象类定义了
  * 获取，都集中在 DefaultListableBeanFactory 中的 beanDefinitionMap 里
  */
@@ -77,5 +76,14 @@ public class DefaultListableBeanFactory
         }
 
         return beansOfType;
+    }
+
+    @Override
+    public void preInstantiateSingletons() throws BeansException {
+//        看似什么也没有做，也没有返回值，其实这个会触发之前写的代码
+//        就是获取一个不存在的bean时，会创建这个bean，以此来初始化bean，就不需要手动getBean了
+        for (String beanName : beanDefinitionMap.keySet()) {
+            this.getBean(beanName);
+        }
     }
 }

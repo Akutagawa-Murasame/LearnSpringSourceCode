@@ -50,7 +50,7 @@ public class TestResourceLoad {
      */
     @Test
     public void test_url() throws IOException {
-        Resource resource = resourceLoader.getResource("https://github.com/Akutagawa-Murasame/LearnSpringSourceCode/blob/main/.gitignore");
+        Resource resource = resourceLoader.getResource("https://gitee.com/JoyDayLily/LearnSpringSourceCode/blob/main/.gitignore");
         InputStream inputStream = resource.getInputStream();
         String content = IoUtil.readUtf8(inputStream);
         System.out.println(content);

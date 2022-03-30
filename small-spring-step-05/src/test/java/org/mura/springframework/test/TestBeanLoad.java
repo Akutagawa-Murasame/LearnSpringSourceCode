@@ -28,5 +28,4 @@ public class TestBeanLoad {
 
 //        有点意思
     }
-
 }
