@@ -23,3 +23,4 @@ module：
 - 7、可以自定义初始化和销毁的钩子函数
 ![](images/small-spring-step-07.png)
 - 8、可以让bean感知到自己创建过程中的一些参与者，这在spring当中叫做aware
+![](images/small-spring-step-08.png)
