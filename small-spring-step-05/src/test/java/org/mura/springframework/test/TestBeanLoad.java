@@ -3,7 +3,7 @@ package org.mura.springframework.test;
 import org.junit.Test;
 import org.mura.springframework.beans.BeansException;
 import org.mura.springframework.beans.factory.support.DefaultListableBeanFactory;
-import org.mura.springframework.beans.factory.xml.XmlBeanDefinitionReader;
+import org.mura.springframework.beans.factory.support.XmlBeanDefinitionReader;
 import org.mura.springframework.test.bean.UserService;
 
 /**

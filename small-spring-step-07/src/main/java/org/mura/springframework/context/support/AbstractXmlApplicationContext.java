@@ -2,7 +2,7 @@ package org.mura.springframework.context.support;
 
 import org.mura.springframework.beans.BeansException;
 import org.mura.springframework.beans.factory.support.DefaultListableBeanFactory;
-import org.mura.springframework.beans.factory.xml.XmlBeanDefinitionReader;
+import org.mura.springframework.beans.factory.support.XmlBeanDefinitionReader;
 
 /**
  * @author Akutagawa Murasame

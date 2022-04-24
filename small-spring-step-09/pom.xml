@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>LearnSpringSourceCode</artifactId>
+        <groupId>org.mura</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+<!--    添加了FactoryBean-->
+<!--    FactoryBean用于自定义拓展接口，这样别的框架也可以使用spring进行bean注入了-->
+<!--    FactoryBean本身是个bean，其中定义了一个getBean方法，当spring在bean的注册过程中-->
+<!--    发现要注入的bean属于FactoryBean时就会调用这个bean的getBean方法，在这个方法中我们-->
+<!--    可以设置bean是否单例（FactoryBean包含isSingleton方法，设置对象销毁后是否从内存中删除），-->
+<!--    对接口进行一些增强（MyBatis-spring就是定义了一个MapperFactoryBean来进行接口的增强）-->
+    <artifactId>small-spring-step-09</artifactId>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+    </properties>
+
+</project>

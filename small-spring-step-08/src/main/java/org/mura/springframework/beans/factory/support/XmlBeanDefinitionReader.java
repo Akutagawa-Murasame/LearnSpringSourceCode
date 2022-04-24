@@ -1,4 +1,4 @@
-package org.mura.springframework.beans.factory.xml;
+package org.mura.springframework.beans.factory.support;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.XmlUtil;
