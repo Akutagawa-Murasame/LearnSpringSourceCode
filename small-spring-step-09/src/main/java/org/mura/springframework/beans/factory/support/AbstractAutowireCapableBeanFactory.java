@@ -34,10 +34,12 @@ import java.lang.reflect.Method;
  * createBean 中补全属性填充部分。
  * <p>
  * step-06在这个类中加入了bean的前置和后置处理
- *
+ * <p>
  * step-07在这个类中加入了初始化钩子，完成了06中的待完成内容
- *
+ * <p>
  * step-08在这个类中加入了对于aware的感知操作
+ * <p>
+ * step-09在这个类进行了是否单例的判断，如果是单例的，则不在内存中删除
  */
 public abstract class AbstractAutowireCapableBeanFactory
         extends AbstractBeanFactory
@@ -72,8 +74,11 @@ public abstract class AbstractAutowireCapableBeanFactory
 //        注册实现了 DisposableBean 接口的 Bean 对象
         registerDisposableBeanIfNecessary(beanName, bean, beanDefinition);
 
-//        此处都是单例的，还未涉及原型模式
-        addSingleton(beanName, bean);
+//        判断是否单例，如果是单例则添加到map，防止gc清楚
+        if (beanDefinition.isSingleton()) {
+            addSingleton(beanName, bean);
+        }
+
         return bean;
     }
 
@@ -83,6 +88,11 @@ public abstract class AbstractAutowireCapableBeanFactory
      */
     protected void registerDisposableBeanIfNecessary(String beanName, Object bean,
                                                      BeanDefinition beanDefinition) {
+//        非Singleton类型的Bean不执行销毁方法
+        if (!beanDefinition.isSingleton()) {
+            return;
+        }
+
         if (bean instanceof DisposableBean || StrUtil.isNotEmpty(beanDefinition.getDestroyMethodName())) {
             registerDisposableBean(beanName, new DisposableBeanAdapter(bean, beanName, beanDefinition));
         }

@@ -24,3 +24,5 @@ module：
 ![](images/small-spring-step-07.png)
 - 8、可以让bean感知到自己创建过程中的一些参与者，这在spring当中叫做aware
 ![](images/small-spring-step-08.png)
+- 9、可以设置scope，可以与其他框架交接
+![](images/small-spring-step-09.png)

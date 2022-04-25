@@ -16,6 +16,8 @@ import java.util.Set;
  * AbstractBeanFactory 以及继承的 DefaultListableBeanFactory 调用。
  */
 public class DefaultSingletonBeanRegistry implements SingletonBeanRegistry {
+    protected static final Object NULL_OBJECT = new Object();
+
     private final Map<String, Object> singletonObjects = new HashMap<>();
 
     private final Map<String, DisposableBean> disposableBeans = new HashMap<>();

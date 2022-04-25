@@ -66,9 +66,6 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
     }
 
     protected void doLoadBeanDefinitions(InputStream inputStream) throws ClassNotFoundException, BeansException {
-//        Dom解析，有点忘了
-
-//        hutool真是好
 //        将inputStream变成xml结构
         Document document = XmlUtil.readXML(inputStream);
         Element root = document.getDocumentElement();
@@ -92,12 +89,12 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
             String className = bean.getAttribute("class");
             String initMethod = bean.getAttribute("init-method");
             String destroyMethodName = bean.getAttribute("destroy-method");
+            String beanScope = bean.getAttribute("scope");
 
 //             获取 Class，方便获取类中的属性名称
             Class<?> clazz = Class.forName(className);
 
 //             优先级 id > name
-//            hutool
             String beanName = StrUtil.isNotEmpty(id) ? id : name;
 
 //            spring里面，没有定义bean的id和name，bean的id就是类名小写，这里也一样
@@ -105,6 +102,7 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
                 beanName = StrUtil.lowerFirst(clazz.getSimpleName());
             }
 
+//            bean不能重复定义
             if (getRegistry().containsBeanDefinition(beanName)) {
                 throw new BeansException("Duplicate beanName[" + beanName + "] is not allowed");
             }
@@ -113,6 +111,10 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
             BeanDefinition beanDefinition = new BeanDefinition(clazz);
             beanDefinition.setInitMethodName(initMethod);
             beanDefinition.setDestroyMethodName(destroyMethodName);
+
+            if (StrUtil.isNotEmpty(beanScope)) {
+                beanDefinition.setScope(beanScope);
+            }
 
 //            读取属性并填充
             for (int j = 0, m = bean.getChildNodes().getLength(); j < m; ++j) {
