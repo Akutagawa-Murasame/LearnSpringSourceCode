@@ -10,7 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Akutagawa Murasame
  * @date 2022/4/24 21:59
  *
- * 这个类是用来注册FactoryBean的，不是用来注册Bean的
+ * 这个类用来注册FactoryBean产生的Bean的
  *
  * 这其实和数据库的数据缓存到redis很像
  */
