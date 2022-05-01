@@ -57,4 +57,9 @@ public class ApiTest {
 
 //        打印结果有两个后置处理器是因为我们注册了两个bean（userDao和userService）
     }
+
+    @Test
+    public void test() throws BeansException {
+        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring-processor.xml");
+    }
 }

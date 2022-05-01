@@ -88,7 +88,7 @@ public abstract class AbstractAutowireCapableBeanFactory
      */
     protected void registerDisposableBeanIfNecessary(String beanName, Object bean,
                                                      BeanDefinition beanDefinition) {
-//        非Singleton类型的Bean不执行销毁方法（JVM会自动回收）
+//        非Singleton类型的Bean不执行销毁方法
         if (!beanDefinition.isSingleton()) {
             return;
         }

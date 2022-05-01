@@ -26,3 +26,4 @@ module：
 ![](images/small-spring-step-08.png)
 - 9、可以设置scope，可以与其他框架交接
 ![](images/small-spring-step-09.png)
+- 10、可以设置时间监听器，也就是listener
