@@ -68,7 +68,7 @@ public abstract class AbstractApplicationEventMulticaster
 //        获取监听器实现的接口
         Type genericInterface = targetClass.getGenericInterfaces()[0];
 
-//        获取监听器的接口的真实类型
+//        获取监听器的接口的泛型
         Type actualTypeArgument = ((ParameterizedType) genericInterface).getActualTypeArguments()[0];
         String className = actualTypeArgument.getTypeName();
         Class<?> eventClassName;
@@ -81,7 +81,7 @@ public abstract class AbstractApplicationEventMulticaster
 
 //        判定此 eventClassName 对象所表示的类或接口与指定的 event.getClass() 参数所表
 //        示的类或接口是否相同，或是否是其超类或超接口。
-//        也就是说，event继承了监听器，就满足监听的条件
+//        也就是说，event继承了监听器的接口的泛型，就满足监听的条件
 //        方便最后确认是否为子类和父类的关系，以此证明此事件归这个符合的类处理
         return eventClassName.isAssignableFrom(event.getClass());
     }

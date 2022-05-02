@@ -74,7 +74,7 @@ public abstract class AbstractAutowireCapableBeanFactory
 //        注册实现了 DisposableBean 接口的 Bean 对象
         registerDisposableBeanIfNecessary(beanName, bean, beanDefinition);
 
-//        判断是否单例，如果是单例则添加到map，防止gc清楚
+//        判断是否单例，如果是单例则添加到map，防止gc清除
         if (beanDefinition.isSingleton()) {
             addSingleton(beanName, bean);
         }

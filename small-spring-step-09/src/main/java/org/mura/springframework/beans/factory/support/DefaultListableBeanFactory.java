@@ -83,6 +83,7 @@ public class DefaultListableBeanFactory
 //        看似什么也没有做，也没有返回值，其实这个会触发之前写的代码
 //        就是获取一个不存在的bean时，会创建这个bean，以此来初始化bean，就不需要手动getBean了
 //        调试可以看出，这里只有不是beanFactoryProcessor和beanProcessor的bean被实例化了
+//        原型对象实例化后没有加入singletonMap，所以会被GC
         for (String beanName : beanDefinitionMap.keySet()) {
             this.getBean(beanName);
         }

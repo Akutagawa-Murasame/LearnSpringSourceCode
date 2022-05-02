@@ -63,12 +63,12 @@ public abstract class AbstractApplicationContext
 //        9. 发布容器刷新完成事件
         finishRefresh();
 
-//        监听器注册在bean初始化之后，因此目前不能监听bean的创建
+//        监听器注册在bean初始化之后，因为监听器也必须先定义到bean中，因此目前不能监听bean的创建
     }
 
     private void initApplicationEventMulticaster() throws BeansException {
         ConfigurableListableBeanFactory beanFactory = getBeanFactory();
-        AbstractApplicationEventMulticaster applicationEventMulticaster = new SimpleApplicationEventMulticaster(beanFactory);
+        applicationEventMulticaster = new SimpleApplicationEventMulticaster(beanFactory);
         beanFactory.registerSingleton(APPLICATION_EVENT_MULTICASTER_BEAN_NAME, applicationEventMulticaster);
     }
 
