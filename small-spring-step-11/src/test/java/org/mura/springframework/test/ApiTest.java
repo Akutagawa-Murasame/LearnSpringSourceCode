@@ -39,8 +39,7 @@ public class ApiTest {
         AdvisedSupport advisedSupport = new AdvisedSupport();
         advisedSupport.setTargetSource(new TargetSource(userService));
         advisedSupport.setMethodInterceptor(new UserServiceInterceptor());
-        advisedSupport.setMethodMatcher(new AspectJExpressionPointcut(
-                "execution(* org.mura.springframework.test.bean.IUserService.*(..))"));
+        advisedSupport.setMethodMatcher(new AspectJExpressionPointcut("execution(* org.mura.springframework.test.bean.IUserService.*(..))"));
 
 //        代理对象（JdkDynamicAopProxy）
         IUserService proxy_jdk = (IUserService) new JdkDynamicAopProxy(advisedSupport).getProxy();
