@@ -20,3 +20,4 @@ module：
 - [10、可以设置事件监听器，也就是listener](images/small-spring-step-10.png)
 - [11、可以自定义方法切面增强，但是还没和spring整合起来](images/small-spring-step-11.png)
 - [12、可以使用spring的aop功能](images/small-spring-step-12.png)
+- [13、可以使用spring配置文件中注入属性和@Component包扫描](images/small-spring-step-13.png)
