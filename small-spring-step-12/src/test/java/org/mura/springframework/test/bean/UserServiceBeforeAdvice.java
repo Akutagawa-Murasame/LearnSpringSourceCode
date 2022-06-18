@@ -1,7 +1,5 @@
 package org.mura.springframework.test.bean;
 
-import org.aopalliance.intercept.MethodInterceptor;
-import org.aopalliance.intercept.MethodInvocation;
 import org.mura.springframework.aop.MethodBeforeAdvice;
 
 import java.lang.reflect.Method;
