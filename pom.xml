@@ -23,6 +23,7 @@
         <module>small-spring-step-12</module>
         <module>small-spring-step-13</module>
         <module>small-spring-step-14</module>
+        <module>small-spring-step-15</module>
     </modules>
 
 <!--    自己实现，不需要spring依赖-->
